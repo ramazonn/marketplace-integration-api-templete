@@ -1,0 +1,61 @@
+name: Gitea Actions Deploy
+run-name: ${{ gitea.actor }} is deploying 🚀
+
+on:
+  push:
+    branches:
+      #- dev
+      - prod
+    paths-ignore:
+      - '**.md'
+      - 'docs/**'
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v4
+
+      - name: Extract branch name
+        id: extract_branch
+        shell: bash
+        run: echo "branch=${GITHUB_HEAD_REF:-${GITHUB_REF#refs/heads/}}" >> $GITHUB_OUTPUT
+
+
+      - name: Generate .npmrc file from NPMRC_UBAY_CORE variable 
+        run: |
+          touch .npmrcup
+          echo "${{ vars.NPMRC_UBAY_CORE }}" >> .npmrc
+          echo "🔑 .npmrc file has been generated"
+
+      - name: Deploy to VM via SSH
+        env:
+          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+          VM_HOST: ${{ secrets.VM_HOST }}
+          VM_USER: ${{ secrets.VM_USER }}
+          APP_PATH: ${{ secrets.APP_PATH }}
+          GIT_USER: ${{ secrets.GIT_USER }}
+          GIT_TOKEN: ${{ secrets.GIT_TOKEN }}
+        run: |
+          mkdir -p ~/.ssh
+          echo "$SSH_PRIVATE_KEY" | tr -d '\r' > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+
+          SSH_OPTS="-o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -i ~/.ssh/id_rsa"
+          ssh-keyscan -H "$VM_HOST" >> ~/.ssh/known_hosts || true
+
+          APP_PATH_CLEAN=$(printf "%s" "$APP_PATH" | tr -d '\r\n')
+          BRANCH="${{ steps.extract_branch.outputs.branch }}"
+          if [ "$BRANCH" = "prod" ]; then ENV_FILE=".env.prod"; else ENV_FILE=".env.dev"; fi
+
+          ssh $SSH_OPTS "$VM_USER@$VM_HOST" "mkdir -p '$APP_PATH_CLEAN'"
+
+          scp $SSH_OPTS .npmrc "$VM_USER@$VM_HOST:$APP_PATH_CLEAN/.npmrc"
+          scp $SSH_OPTS "$ENV_FILE" "$VM_USER@$VM_HOST:$APP_PATH_CLEAN/.env" || true
+
+          REPO_URL="https://${GIT_USER}:${GIT_TOKEN}@git.ubaytools.com/ubaytools/integration-api.git"
+
+          ssh $SSH_OPTS "$VM_USER@$VM_HOST" "if [ ! -d '$APP_PATH_CLEAN/.git' ]; then git clone -b '$BRANCH' '$REPO_URL' '$APP_PATH_CLEAN' ; else cd '$APP_PATH_CLEAN' && git remote set-url origin '$REPO_URL' && git fetch origin && git checkout '$BRANCH' && git reset --hard 'origin/$BRANCH' ; fi && cd '$APP_PATH_CLEAN' && npm install && npm run build && pm2 restart integration-api || pm2 start npm --name integration-api -- run start"
+
+          rm -f ~/.ssh/id_rsa

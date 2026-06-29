@@ -1,0 +1,3 @@
+@ubaytools:registry=https://gitlab.com/api/v4/projects/<number>>/packages/npm/
+//gitlab.com/api/v4/projects/<number>/packages/npm/:_authToken="token"
+

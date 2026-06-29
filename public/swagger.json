@@ -1,0 +1,770 @@
+{
+  "info": {
+    "title": "API DOC",
+    "description": "API DOC",
+    "version": "1.0.0"
+  },
+  "paths": {
+    "/ofd/send-sale-receipt": {
+      "post": {
+        "summary": "Send Sale Receipt",
+        "description": "Send Sale Receipt",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "success"
+          }
+        },
+        "tags": [
+          "Ofd Receipts"
+        ],
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ]
+      }
+    },
+    "/octo/pay-confirm": {
+      "post": {
+        "summary": "Octo Pay Confirmation",
+        "description": "Octo Pay Confirmation",
+        "parameters": [
+          {
+            "name": "data",
+            "description": "request body",
+            "schema": {
+              "type": "object",
+              "required": [
+                "shop_transaction_id",
+                "octo_payment_UUID",
+                "status",
+                "signature",
+                "hash_key"
+              ],
+              "properties": {
+                "shop_transaction_id": {
+                  "type": "string"
+                },
+                "octo_payment_UUID": {
+                  "type": "string"
+                },
+                "status": {
+                  "type": "string"
+                },
+                "signature": {
+                  "type": "string"
+                },
+                "hash_key": {
+                  "type": "string"
+                },
+                "total_sum": {
+                  "type": "number"
+                },
+                "transfer_sum": {
+                  "type": "number"
+                },
+                "refunded_sum": {
+                  "type": "number"
+                },
+                "card_country": {
+                  "type": "string"
+                },
+                "maskedPan": {
+                  "type": "string"
+                },
+                "rrn": {
+                  "type": "string"
+                },
+                "riskLevel": {
+                  "type": "number"
+                },
+                "payed_time": {
+                  "type": "string"
+                },
+                "card_type": {
+                  "type": "string"
+                }
+              }
+            },
+            "in": "body"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "success"
+          }
+        },
+        "tags": [
+          "Octo"
+        ],
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ]
+      }
+    },
+    "/octo/pay": {
+      "post": {
+        "summary": "Octo Pay",
+        "description": "Octo Pay",
+        "parameters": [
+          {
+            "name": "data",
+            "description": "request body",
+            "schema": {
+              "type": "object",
+              "required": [
+                "orderCode",
+                "totalAmount",
+                "user"
+              ],
+              "properties": {
+                "orderCode": {
+                  "type": "string"
+                },
+                "totalAmount": {
+                  "type": "number"
+                },
+                "user": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string"
+                    },
+                    "phoneNumber": {
+                      "type": "string"
+                    },
+                    "lang": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            },
+            "in": "body"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "success"
+          }
+        },
+        "tags": [
+          "Octo"
+        ],
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ]
+      }
+    },
+    "/iman/webhook": {
+      "post": {
+        "summary": "Iman Webhook",
+        "description": "Iman Webhook",
+        "parameters": [
+          {
+            "name": "data",
+            "description": "request body",
+            "schema": {
+              "type": "object",
+              "required": [
+                "contract_number",
+                "external_id",
+                "status"
+              ],
+              "properties": {
+                "contract_number": {
+                  "type": "string"
+                },
+                "external_id": {
+                  "type": "string"
+                },
+                "status": {
+                  "type": "string"
+                }
+              }
+            },
+            "in": "body"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "success"
+          }
+        },
+        "tags": [
+          "Iman"
+        ],
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ]
+      }
+    },
+    "/telegram/webhook/support-bot": {
+      "post": {
+        "summary": "Telegram Webhook",
+        "description": "Telegram Webhook",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "success"
+          }
+        },
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ]
+      }
+    },
+    "/telegram/webhook/otp-bot": {
+      "post": {
+        "summary": "Telegram Webhook",
+        "description": "Telegram Webhook",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "success"
+          }
+        },
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ]
+      }
+    },
+    "/click/confirm-payment": {
+      "post": {
+        "summary": "Confirm Order",
+        "description": "Confirm Order",
+        "parameters": [
+          {
+            "name": "data",
+            "description": "request body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "click_trans_id": {
+                  "type": "string"
+                },
+                "service_id": {
+                  "type": "number"
+                },
+                "click_paydoc_id": {
+                  "type": "number"
+                },
+                "merchant_trans_id": {
+                  "type": "string"
+                },
+                "amount": {
+                  "type": "number"
+                },
+                "action": {
+                  "type": "number"
+                },
+                "error": {
+                  "type": "number"
+                },
+                "error_note": {
+                  "type": "string"
+                },
+                "sign_time": {
+                  "type": "string"
+                },
+                "sign_string": {
+                  "type": "string"
+                },
+                "merchant_prepare_id": {
+                  "type": "number"
+                }
+              }
+            },
+            "in": "body"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "success"
+          }
+        },
+        "tags": [
+          "Click"
+        ],
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ]
+      }
+    },
+    "/payme/confirm-payment": {
+      "post": {
+        "summary": "Payme Webhook",
+        "description": "Payme Webhook",
+        "parameters": [
+          {
+            "name": "data",
+            "description": "request body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "method": {
+                  "type": "string"
+                },
+                "params": {
+                  "type": "object"
+                },
+                "id": {
+                  "type": "number"
+                }
+              }
+            },
+            "in": "body"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "success"
+          }
+        },
+        "tags": [
+          "Payme"
+        ],
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ]
+      }
+    },
+    "/uzum/check": {
+      "post": {
+        "summary": "Uzum Check Payment",
+        "description": "Uzum Check Payment",
+        "parameters": [
+          {
+            "name": "data",
+            "description": "request body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "serviceId": {
+                  "type": "number"
+                },
+                "timestamp": {
+                  "type": "number"
+                },
+                "params": {
+                  "type": "object"
+                }
+              }
+            },
+            "in": "body"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "success"
+          }
+        },
+        "tags": [
+          "Uzum"
+        ],
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ]
+      }
+    },
+    "/uzum/confirm": {
+      "post": {
+        "summary": "Uzum Confirm Transaction",
+        "description": "Uzum Confirm Transaction",
+        "parameters": [
+          {
+            "name": "data",
+            "description": "request body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "serviceId": {
+                  "type": "number"
+                },
+                "timestamp": {
+                  "type": "number"
+                },
+                "transId": {
+                  "type": "string"
+                },
+                "paymentSource": {
+                  "type": "string"
+                },
+                "processingReferenceNumber": {
+                  "type": "string"
+                },
+                "phone": {
+                  "type": "string"
+                },
+                "tariff": {
+                  "type": "string"
+                },
+                "cardType": {
+                  "type": "number"
+                }
+              }
+            },
+            "in": "body"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "success"
+          }
+        },
+        "tags": [
+          "Uzum"
+        ],
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ]
+      }
+    },
+    "/uzum/create": {
+      "post": {
+        "summary": "Uzum Create Transaction",
+        "description": "Uzum Create Transaction",
+        "parameters": [
+          {
+            "name": "data",
+            "description": "request body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "serviceId": {
+                  "type": "number"
+                },
+                "timestamp": {
+                  "type": "number"
+                },
+                "transId": {
+                  "type": "string"
+                },
+                "amount": {
+                  "type": "number"
+                },
+                "params": {
+                  "type": "object"
+                }
+              }
+            },
+            "in": "body"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "success"
+          }
+        },
+        "tags": [
+          "Uzum"
+        ],
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ]
+      }
+    },
+    "/uzum/event-callback": {
+      "post": {
+        "summary": "Uzum Event Callback",
+        "description": "Uzum Event Callback",
+        "parameters": [
+          {
+            "name": "data",
+            "description": "request body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "orderId": {
+                  "type": "string"
+                },
+                "orderNumber": {
+                  "type": "string"
+                },
+                "eventType": {
+                  "type": "string"
+                },
+                "actionCode": {
+                  "type": "number"
+                },
+                "actionCodeDescription": {
+                  "type": "string"
+                }
+              }
+            },
+            "in": "body"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "success"
+          }
+        },
+        "tags": [
+          "Uzum"
+        ],
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ]
+      }
+    },
+    "/uzum/payment/register": {
+      "post": {
+        "summary": "Uzum Pay",
+        "description": "Uzum Pay",
+        "parameters": [
+          {
+            "name": "data",
+            "description": "request body",
+            "schema": {
+              "type": "object",
+              "required": [
+                "orderCode",
+                "totalAmount",
+                "user",
+                "items"
+              ],
+              "properties": {
+                "orderCode": {
+                  "type": "string"
+                },
+                "totalAmount": {
+                  "type": "number"
+                },
+                "user": {
+                  "type": "object"
+                },
+                "items": {
+                  "type": "array"
+                }
+              }
+            },
+            "in": "body"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "success"
+          }
+        },
+        "tags": [
+          "Uzum"
+        ],
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ]
+      }
+    },
+    "/uzum/receipt-callback": {
+      "post": {
+        "summary": "Uzum Receipt Callback",
+        "description": "Uzum Receipt Callback",
+        "parameters": [
+          {
+            "name": "data",
+            "description": "request body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "orderId": {
+                  "type": "string"
+                },
+                "receiptType": {
+                  "type": "string"
+                },
+                "receiptUrl": {
+                  "type": "string"
+                }
+              }
+            },
+            "in": "body"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "success"
+          }
+        },
+        "tags": [
+          "Uzum"
+        ],
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ]
+      }
+    },
+    "/uzum/reverse": {
+      "post": {
+        "summary": "Uzum Reverse Transaction",
+        "description": "Uzum Reverse Transaction",
+        "parameters": [
+          {
+            "name": "data",
+            "description": "request body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "serviceId": {
+                  "type": "number"
+                },
+                "timestamp": {
+                  "type": "number"
+                },
+                "transId": {
+                  "type": "string"
+                }
+              }
+            },
+            "in": "body"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "success"
+          }
+        },
+        "tags": [
+          "Uzum"
+        ],
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ]
+      }
+    },
+    "/uzum/status": {
+      "post": {
+        "summary": "Uzum Status",
+        "description": "Uzum Status",
+        "parameters": [
+          {
+            "name": "data",
+            "description": "request body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "serviceId": {
+                  "type": "number"
+                },
+                "timestamp": {
+                  "type": "number"
+                },
+                "transId": {
+                  "type": "string"
+                }
+              }
+            },
+            "in": "body"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "success"
+          }
+        },
+        "tags": [
+          "Uzum"
+        ],
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ]
+      }
+    },
+    "/uzum/confirm-payment": {
+      "post": {
+        "summary": "Uzum Payment Callback",
+        "description": "Uzum Payment Callback",
+        "parameters": [
+          {
+            "name": "data",
+            "description": "request body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "orderId": {
+                  "type": "string"
+                },
+                "operationState": {
+                  "type": "string"
+                },
+                "operationType": {
+                  "type": "string"
+                },
+                "cardType": {
+                  "type": "number"
+                },
+                "merchantOperationId": {
+                  "type": "string"
+                },
+                "orderNumber": {
+                  "type": "string"
+                },
+                "rrn": {
+                  "type": "string"
+                },
+                "bindingId": {
+                  "type": "string"
+                }
+              }
+            },
+            "in": "body"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "success"
+          }
+        },
+        "tags": [
+          "Uzum"
+        ],
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ]
+      }
+    }
+  },
+  "responses": {},
+  "definitions": {},
+  "tags": [],
+  "swagger": "2.0",
+  "securityDefinitions": {
+    "ApiKeyAuth": {
+      "type": "apiKey",
+      "in": "header",
+      "name": "Authorization"
+    }
+  }
+}
